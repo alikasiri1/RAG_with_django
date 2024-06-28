@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ article.title }}</title>
+</head>
+<body>
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.content }}</p>
+    <p><strong>Created at:</strong> {{ article.created_at }}</p>
+    <p><strong>Updated at:</strong> {{ article.updated_at }}</p>
+    <a href="{% url 'article_edit' article.id %}">Edit</a>
+    <a href="{% url 'article_delete' article.id %}">Delete</a>
+    <a href="{% url 'article_list' %}">Back to list</a>
+</body>
+</html>
