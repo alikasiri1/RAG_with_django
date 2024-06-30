@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% if form.instance.pk %}Edit Article{% else %}Create Article{% endif %}</title>
+    <title>{% if form.instance.pk %}Edit Article{{form.instance.pk}}{% else %}Create Article{% endif %}</title>
 </head>
 <body>
     <h1>{% if form.instance.pk %}Edit Article{% else %}Create Article{% endif %}</h1>
     <form method="post">
         {% csrf_token %}
+        <!-- 
+        {{form.label}}
+        {{ form.title }} -->
         {{ form.as_p }}
         <button type="submit">{% if form.instance.pk %}Update{% else %}Create{% endif %}</button>
     </form>

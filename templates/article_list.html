@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Article List</title>
-</head>
-<body>
+{% extends 'base.html'%}
+
+{% block content %}
+{% load static%}
+<div id="fh5co-counter" class="fh5co-counters">
     <h1>Articles</h1>
     <a href="{% url 'article_create' %}">Create New Article</a>
     <ul>
@@ -15,5 +14,6 @@
             </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+</div>
+
+{% endblock content %}
