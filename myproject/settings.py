@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #local
-    'Rag',
-    'users'
+    'Rag.apps.RagConfig',
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
