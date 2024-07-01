@@ -5,6 +5,7 @@ from .models import Article , Page
 from .forms import ArticleForm , QuestionForm
 from django.contrib.auth.decorators import login_required
 from users.models import Profile
+from django.contrib.auth.decorators import login_required
 
 def homepage(request):
     return render(request , 'home.html')
@@ -19,6 +20,7 @@ def article_detail(request, id):
     print(request.path_info , print(type(request)))
     return render(request, 'article_detail.html', {'article': article})
 
+@login_required(login_url='login')
 def article_create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
@@ -54,7 +56,7 @@ def article_delete(request, id):
 #######################################
 @login_required
 def dashboard(request):
-    user_profile = request.user.user_profile
+    user_profile = request.user#.user_profile
     pages = user_profile.pages.all()
     return render(request, 'dashboard.html', {'pages': pages })
 
