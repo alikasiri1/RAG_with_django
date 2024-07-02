@@ -55,6 +55,7 @@ def article_delete(request, id):
 
 
 #######################################
+#  Profile.objects.get(user = request.user)
 @login_required
 def chatbot(request):
     # user_profile = request.user#.user_profile
@@ -67,9 +68,9 @@ def chatbot(request):
 #     return render(request, 'page_detail.html', {'page': page, 'questions': questions})
 
 @login_required
-def page_detail(request, page_id):
+def page_detail(request, id):
 
-    page =  get_object_or_404(Page, id=page_id) #get_object_or_404(Page, id=page_id, user_profile=request.user.userprofile)
+    page =  get_object_or_404(Page, id=id) #get_object_or_404(Page, id=id, user_profile=request.user.userprofile)
     # questions = page.questions.all()
     pages = Page.objects.filter(user_profile=page.user_profile) 
 
@@ -82,15 +83,21 @@ def page_detail(request, page_id):
             'page': page, 
             'questions_and_answers': questions_and_answers,
         }
+        
         if request.method == 'POST':
+            print(request.POST)
             form = QuestionForm(request.POST)
             if form.is_valid():
                 question = form.save(commit=False)
                 question.page = page
                 question.response = 'this is chat gpt'
                 question.save()
-                return redirect('chatbot_page', page_id=page.id)
+                print('this is question',question)
+                return redirect('chatbot_page' , id = page.id)
+            else:  
+                print('form is not valide') 
         else:
+            
             form = QuestionForm()
             context['form'] = form 
 

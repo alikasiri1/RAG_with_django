@@ -18,7 +18,7 @@
             <span class="tooltiptext">
               Open Sidebar
               </span>
-            <button id="sidebar-toggle" style="color: white;">
+            <button id="sidebar-toggle">
               <i class="fas fa-chevron-right"></i>
               </button>
         </div>
@@ -36,14 +36,18 @@
             <button id="new-conversation-btn">
               Start New Conversation
               </button>
+              {% if page %}
                 {% for page in pages %}
                     <li><a href="{% url 'chatbot_page' page.id %}">{{ page.title }}</a></li>
                 {% endfor %}
+            {% else %}
+              <p>No conversation yet</p>
+            {% endif %}
 
         </div>
         
     </div>
-    <div class="chat-container dark-mode">
+    <div class="chat-container light-mode">
         <div class="chat-content">
             <div class="chat-header">
                 <div class="logo-container">
@@ -65,7 +69,7 @@
             <div class="chat-box" id="chat-box">
                 {% for qa in questions_and_answers %}
                     
-                        <p style="background-color: rgb(63 65 77);"><img src="{% static 'images/icon.svg' %}" alt="">{{qa.message}}</p> <!--  -->
+                        <p><img src="{% static 'images/icon.svg' %}" alt="">{{page.id}}{{qa.message}}</p> <!--  -->
                         <p><img src="{% static 'images/favicon.ico' %}" alt="">{{qa.response}}</p><!--  -->
                     
                 {% endfor %}
@@ -73,8 +77,11 @@
             <div class="input-container">
                 <form method="post" action="{% url 'chatbot_page' page.id %}" style="display: contents;">
                     {% csrf_token %}
-                    <input type="text" id="user-input" placeholder="Type your message..." name = "message" />
-                    <button id="send-button" ><b>&uarr;</b></button>
+                    <input type="text" id="user-input" 
+                       placeholder="Type your message..." 
+                       name = 'message'
+                       >
+                       <button id="send-button" ><b>&uarr;</b></button>
                     <!-- <button type="submit" id="send-btn"  class="material-symbols-rounded">send</button> -->
                     
                 </form> 
@@ -133,6 +140,38 @@
                 chatContainer.classList.toggle('dark-mode');
                 chatContainer.classList.toggle('light-mode');
             });
+        }
+
+        if (sendButton && userInput) {
+            sendButton.addEventListener('click', sendMessage);
+            userInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message !== '') {
+                appendMessage('user', message);
+                getResponse(message);
+                userInput.value = '';
+            }
+        }
+
+        function appendMessage(sender, message) {
+            const p = document.createElement('p');
+            p.textContent = `${sender}: ${message}`;
+            chatBox.appendChild(p);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getResponse(message) {
+            // Simulate a response
+            setTimeout(() => {
+                appendMessage('bot', 'This is a response.');
+            }, 1000);
         }
     });
 </script>
