@@ -23,6 +23,9 @@
   
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">
     
+    <!-- bootstrap links-->
+
+
     <!-- Animate.css -->
     <link rel="stylesheet" href="{% static 'styles/animate.css' %}"><!--"css/animate.css" -->
     <!-- Icomoon Icon Fonts-->
@@ -42,6 +45,11 @@
   
     <!-- Modernizr JS -->
     <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+
+
+    
+
+    
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
@@ -51,13 +59,9 @@
   <body>
       <div class="fh5co-loader"></div>
       <div id="page"> 
-      {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-      {% endif %}
+      
+      
+
         {% block content %}
         {% endblock content %}
       </div>
@@ -87,4 +91,5 @@
       <script src="{% static 'js/main.js' %}"></script><!-- "js/jquery.min.js"-->
     
   </body>
+  <script src="{% static 'login/uikit/app.js' %}"> </script>
 </html>

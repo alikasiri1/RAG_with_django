@@ -1,7 +1,3 @@
-
-{% extends 'base.html'%}
-
-{% block content %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    
     <!-- Favicon -->
     <link rel="shortcut icon" href="{% static 'login/images/favicon.ico' %}" type="image/x-icon" />
     <!-- Icon - IconMonster -->
@@ -18,57 +14,127 @@
     <link rel="stylesheet" href="{% static 'login/uikit/styles/uikit.css' %}" />
     <!-- Dev Search UI -->
     <link rel="stylesheet" href="{% static 'login/styles/app.css' %}" />
-
+    <script src="{% static 'login/uikit/app.js' %}"> </script>
     <title>DevSearch - Connect with Developers!</title>
   </head>
 
+  
+  </div>
+
   <body>
-    <div class="auth">
-      <div class="card">
-        <div class="auth__header text-center">
-          <a href="/">
-            <img src="{% static 'login/images/icon.svg' %}" alt="icon" />
-          </a>
-          <h3>Account Login</h3>
-          <p>Hello Developer, Welcome Back!</p>
-        </div>
+    
+    <div class="auth" >
+      
+      {% if page == 'login' %}
+        
+        <div class="card">
+          <div id="message"></div>
+          
+          <div class="auth__header text-center">
+            <a href="/">
+              <img src="{% static 'login/images/icon.svg' %}" alt="icon" />
+            </a>
+            <h3>Account Login</h3>
+            <p>Hello Developer, Welcome Back!</p>
+          </div>
+          <form action="{% url 'login' %}" class="form auth__form" method="post">
+            {% csrf_token %}
+            
+            <div class="form__field">
+              <label for="formInput#text">Username: </label>
+              <input
+                class="input input--text"
+                id="formInput#text"
+                type="text"
+                name="username"
+                placeholder="Enter your username..."
+              />
+            </div>
+            
+                
 
-        <form action="{% url 'login' %}" class="form auth__form" method="post">
-          {% csrf_token %}
-          <!-- Input:Email -->
-          <div class="form__field">
-            <label for="formInput#text">Username: </label>
-            <input
-              class="input input--text"
-              id="formInput#text"
-              type="text"
-              name="username"
-              placeholder="Enter your username..."
-            />
-          </div>
+          
+            <div class="form__field">
+              <label for="formInput#password">Password: </label>
+              <input
+                class="input input--password"
+                id="formInput#passowrd"
+                type="password"
+                name="password"
+                placeholder="••••••••"
+              />
+            </div>
+            {% if messages %}
+              {% for message in messages %}
+                <p style="color: red;">{{message}} !</p>
+              <!-- <div class="alert alert--{{message.tags}}">
+                  <p class="alert__message">{{message}}</p>
+                  
+                  <button onclick="removeAlert(this)">x</button>
+                </div> -->
+            {% endfor %}
+        {% endif %}
+            <div class="auth__actions">
+              <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
+              <a href="#">Forget Password?</a>
+            </div>
+          </form> 
 
-          <!-- Input:Password -->
-          <div class="form__field">
-            <label for="formInput#password">Password: </label>
-            <input
-              class="input input--password"
-              id="formInput#passowrd"
-              type="password"
-              name="password"
-              placeholder="••••••••"
-            />
+          <div class="auth__alternative">
+            <p>Don’t have an Account?</p>
+            <a href="{% url 'register' %}">Sign Up</a>
           </div>
-          <div class="auth__actions">
-            <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
-            <a href="forgetpassword.html">Forget Password?</a>
-          </div>
-        </form>
-        <div class="auth__alternative">
-          <p>Don’t have an Account?</p>
-          <a href="signup.html">Sign Up</a>
         </div>
-      </div>
+      
+      <!-- register -->
+      {% else %}
+      
+        <div class="card" style="margin-top: 120px;">
+            <div class="auth__header text-center">
+                <a href="/">
+                    <img src="{% static 'login/images/icon.svg' %}" alt="icon" />
+                </a>
+                <h3>Register an Account</h3>
+                <p>Create a new developer account</p>
+            </div>
+    
+            <form method="POST" action="{% url 'register' %}" class="form auth__form">
+                {% csrf_token %}
+    
+                {% for field in form %}
+                <div class="form__field">
+                    <label for="formInput#text">{{field.label}}</label>
+                    {{field}}
+    
+                    <!-- {% if field.help_text %}
+                    <small>{{field.help_text}}</small>
+                    {% endif %} -->
+    
+                    {% for error in field.errors %}
+                    <p style="color: red;">{{error}}</p>
+                    {% endfor %}
+    
+                </div>
+    
+                {% endfor %}
+    
+                <div class="auth__actions">
+                    <input class="btn btn--sub btn--lg" type="submit" value="Sign  In" />
+                </div>
+            </form>
+            <div class="auth__alternative">
+                <p>Already have an Account?</p>
+                <a href="{% url 'login' %}">Log In</a>
+            </div>
+        </div>
+      {% endif %}
     </div>
   </body>
+  
+  <!-- <script>
+		function removeAlert(button) {
+		var alertDiv = button.parentElement;
+		alertDiv.remove();
+		}
+	</script> -->
 </html>
-{% endblock content %}
