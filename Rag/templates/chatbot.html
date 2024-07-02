@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                display: flex;
+            }
+            .sidebar {
+                width: 200px;
+                background-color: #f8f8f8;
+                padding: 10px;
+                height: 100vh;
+            }
+            .content {
+                margin-left: 20px;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+
+
+        <div class="sidebar">
+            <h2>Pages</h2>
+            <ul>
+                {% for page in pages %}
+                    <li><a href="{% url 'chatbot_page' page.id %}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="content">
+            {% if page %}
+            
+                <ul>
+                    {% for qa in questions_and_answers %}
+                        <li>
+                            <strong>Q:</strong> {{ qa.message }}<br>
+                            <strong>A:</strong> {{ qa.response }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Add Q&A</button>
+                </form>
+        
+            {%else%}
+                <div>
+                    no message
+                </div>
+            {% endif %}
+        </div>
+    </body>
+        
+</html>

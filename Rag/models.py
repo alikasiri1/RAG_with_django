@@ -1,5 +1,6 @@
 from django.db import models
-from users.models import Profile
+# from users.models import Profile
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Article(models.Model):
@@ -13,26 +14,27 @@ class Article(models.Model):
 
 class Page(models.Model):
     title = models.CharField(max_length=100 , null = True , blank = True ) 
-    user_profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    description = models.TextField(blank=True, null=True)
+    user_profile = models.ForeignKey(User, on_delete=models.CASCADE)
+    # description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
     
 
-class Question(models.Model):
+class Question_and_Answer(models.Model):
     page = models.ForeignKey(Page, related_name='questions', on_delete=models.CASCADE)
-    text = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.text
-
-class Answer(models.Model):
-    question = models.OneToOneField(Question, related_name='answer', on_delete=models.CASCADE)
-    text = models.TextField()
+    message = models.TextField()
+    response = models.TextField()
     # created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.text
+        return self.page.title
+
+# class Answer(models.Model):
+#     question = models.OneToOneField(Question, related_name='answer', on_delete=models.CASCADE)
+#     text = models.TextField()
+#     # created_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return self.text
