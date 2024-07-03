@@ -106,7 +106,7 @@ def page_detail(request, id):
         print('this is else')
         # redirect('home_page')
         raise Http404("Page not found")
-
+ 
 # @login_required
 # def create_question(request, page_id):
 #     page = get_object_or_404(Page, id=page_id, user_profile=request.user.userprofile)

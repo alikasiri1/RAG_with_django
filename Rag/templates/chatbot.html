@@ -12,7 +12,7 @@
 </head>
 
 <body class="dark-mode">
-    
+     
     <div class="sidebar collapsed">
         <div class="tooltip">
             <span class="tooltiptext">
@@ -37,7 +37,16 @@
               Start New Conversation
               </button>
                 {% for page in pages %}
-                    <li><a href="{% url 'chatbot_page' page.id %}">{{ page.title }}</a></li>
+                <div style="background-color: #3a3b3b;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                margin: 10px;">
+                    <a href="{% url 'chatbot_page' page.id %}">{{ page.title }}</a>
+                </div>
                 {% endfor %}
 
         </div>
@@ -45,7 +54,7 @@
     </div>
     <div class="chat-container dark-mode">
         <div class="chat-content">
-            <div class="chat-header">
+            <!-- <div class="chat-header">
                 <div class="logo-container">
                     <h1>
                       <i></i>
@@ -60,14 +69,21 @@
                     </label>
                 </div>
 
-            </div>
+            </div> -->
             {% if page %}
-            <div class="chat-box" id="chat-box">
+            <div class="chat-box" id="chat-box" >
                 {% for qa in questions_and_answers %}
                     
-                        <p style="background-color: rgb(63 65 77);"><img src="{% static 'images/icon.svg' %}" alt="">{{qa.message}}</p> <!--  -->
-                        <p><img src="{% static 'images/favicon.ico' %}" alt="">{{qa.response}}</p><!--  -->
-                    
+                        <div style="background-color:rgb(63 65 77) ; display: flex;"> <!---->
+                            <div style="width: 35px;  margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
+                                XD
+                            </div>
+                            <p>{{qa.message}}</p>
+                        </div> <!--  -->
+                        <div style=" display: flex; margin-left:13%; margin-top: 10px;margin-bottom: 10px;"> 
+                            <img src="{% static 'images/chatbot.jpg' %}"  style=" width: 35px; height: 35px; margin-right: 5px;">
+                            <p>{{qa.response}}</p><!--  -->
+                        </div>
                 {% endfor %}
             </div>
             <div class="input-container">
@@ -135,5 +151,18 @@
             });
         }
     });
+
+    document.getElementById('user-input').addEventListener('input', () => {
+        const input = document.getElementById('user-input').value;
+        const button = document.getElementById('send-button');
+      
+        if (input.length > 0) {
+          button.classList.add('enabled');
+          sendButton.disabled = false;
+        } else {
+          button.classList.remove('enabled');
+          sendButton.disabled = true;
+        }
+      });
 </script>
 </html>
