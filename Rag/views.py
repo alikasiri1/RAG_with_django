@@ -60,6 +60,7 @@ def article_delete(request, id):
 def chatbot(request):
     # user_profile = request.user#.user_profile
     pages = Page.objects.filter(user_profile=request.user)
+    print(pages[0].id) # f75eb1b0-0ce2-4a36-9d6f-179fc49263a9
     return render(request, 'chatbot.html', {'pages': pages , 'page':None })
 
 # def page_detail(request, page_id): 
@@ -73,7 +74,7 @@ def page_detail(request, id):
     page =  get_object_or_404(Page, id=id) #get_object_or_404(Page, id=id, user_profile=request.user.userprofile)
     # questions = page.questions.all()
     pages = Page.objects.filter(user_profile=page.user_profile) 
-
+    print(request.user.email , page.user_profile.email)
     if request.user.email == page.user_profile.email:
 
         questions_and_answers = Question_and_Answer.objects.filter(page=page)
