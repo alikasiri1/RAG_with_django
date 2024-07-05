@@ -56,7 +56,7 @@ def article_delete(request, id):
 
 #######################################
 #  Profile.objects.get(user = request.user)
-@login_required
+@login_required(login_url='login')
 def chatbot(request):
     # user_profile = request.user#.user_profile
     pages = Page.objects.filter(user_profile=request.user)
@@ -68,7 +68,7 @@ def chatbot(request):
 #     questions = page.questions.all()  # Use the related name 'questions' to fetch all related questions
 #     return render(request, 'page_detail.html', {'page': page, 'questions': questions})
 
-@login_required
+@login_required(login_url='login')
 def page_detail(request, id):
 
     page =  get_object_or_404(Page, id=id) #get_object_or_404(Page, id=id, user_profile=request.user.userprofile)
