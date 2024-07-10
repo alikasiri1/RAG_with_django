@@ -51,7 +51,9 @@ def questionPage(request , id): # it send Q and A for this api and save into DB
         message = data['message'],
         response = data['response'],
     )
-
+    # response =  get_respons_from_gpt(QandA.message)
+    # QandA.response = response
+    # QandA.save()
     print('data' , data)
     serializer =  PageSerializer(page , many = False) 
     # this is for response of api that returnt pageSerializer

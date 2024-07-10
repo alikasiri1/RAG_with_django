@@ -59,9 +59,31 @@ def article_delete(request, id):
 @login_required(login_url='login')
 def chatbot(request):
     # user_profile = request.user#.user_profile
-    pages = Page.objects.filter(user_profile=request.user)
-    print(pages[0].id) # f75eb1b0-0ce2-4a36-9d6f-179fc49263a9
-    return render(request, 'chatbot.html', {'pages': pages , 'page':None })
+    pages  = Page.objects.filter(user_profile=request.user)
+    # print(pages[0].id) # f75eb1b0-0ce2-4a36-9d6f-179fc49263a9
+
+    if request.method == 'POST':
+        print(request.POST)
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            # page.title = get_title_for_page_with_llm(question.message)
+            page , created = Page.objects.get_or_create(
+                title = "new Page",
+                user_profile = request.user ,
+            )
+            question.page = page
+            question.response = 'this is chat gpt' # question.response =  get_respons_from_gpt(question.message)
+            question.save()
+            print('this is question',question)
+            return redirect('chatbot_page' , id = page.id)
+        else:  
+            print('form is not valide') 
+
+    form = QuestionForm()
+    
+    return render(request, 'chatbot.html', {'pages': pages , 'page':None ,'form_new_page':form , 'user': request.user})
+
 
 # def page_detail(request, page_id): 
 #     page = get_object_or_404(Page, id=page_id, user_profile=request.user.userprofile)

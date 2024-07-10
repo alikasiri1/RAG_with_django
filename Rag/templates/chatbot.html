@@ -25,12 +25,16 @@
         <div class="sidebar-content">
             <div class="conversation-list">
                 <div class="conversation">
-                    <p class="conversation-text">
-                      Last Conversation:
-                      </p>
-                    <p class="conversation-content">
+                    <a href="{% url 'profile' %}"><div style="width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
+                        {{user.username}}
+                    </div>   
+                    </a>                 
+                    <!-- <p class="conversation-text" >
+                        
+                    </p> -->
+                    <!-- <p class="conversation-content">
                       No conversation yet
-                      </p>
+                      </p> -->
                 </div>
             </div>
             <button id="new-conversation-btn">
@@ -71,40 +75,53 @@
 
             </div> -->
             {% if page %}
-            <div class="chat-box" id="chat-box" >
-                {% for qa in questions_and_answers %}
-                    
-                        <div style="background-color:rgb(63 65 77) ; display: flex;"> <!---->
-                            <div style="width: 35px;  margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
-                                XD
+                <div class="chat-box" id="chat-box" >
+                    {% for qa in questions_and_answers %}
+                        
+                            <div style="background-color:rgb(63 65 77) ; display: flex;"> <!---->
+                                <div style="width: 35px;  margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
+                                    {{user.username}}
+                                </div>
+                                <p>{{qa.message}}</p>
+                            </div> <!--  -->
+                            <div style=" display: flex; margin-left:13%; margin-top: 10px;margin-bottom: 10px;"> 
+                                <img src="{% static 'images/chatbot.jpg' %}"  style=" width: 35px; height: 35px; margin-right: 5px;">
+                                <p>{{qa.response}}</p><!--  -->
                             </div>
-                            <p>{{qa.message}}</p>
-                        </div> <!--  -->
-                        <div style=" display: flex; margin-left:13%; margin-top: 10px;margin-bottom: 10px;"> 
-                            <img src="{% static 'images/chatbot.jpg' %}"  style=" width: 35px; height: 35px; margin-right: 5px;">
-                            <p>{{qa.response}}</p><!--  -->
-                        </div>
-                {% endfor %}
-            </div>
+                    {% endfor %}
+                </div>
+
+                <div class="input-container">
+                    <form method="post" action="{% url 'chatbot_page' page.id %}" style="display: contents;">
+                        {% csrf_token %}
+                        <input type="text" id="user-input" placeholder="Type your message..." name = "message" />
+                        <button id="send-button" ><b>&uarr;</b></button>
+                        <!-- <button type="submit" id="send-btn"  class="material-symbols-rounded">send</button> -->
+                        
+                    </form> 
+                </div>
+
+                <!-- <div class="input-container">
+                    <input type="text" id="user-input" 
+                        placeholder="Type your message...">
+                    <button id="send-button">
+                    <b>&uarr;</b>
+                    </button>
+                </div> -->
+        {% else %}
+            <div style="margin-left: 40%;"><p >start a new conversation</p></div>
+            <div class="chat-box" id="chat-box" ></div>
+            {%if form_new_page %}
             <div class="input-container">
-                <form method="post" action="{% url 'chatbot_page' page.id %}" style="display: contents;">
+                <form method="post" action="{% url 'chatbot' %}" style="display: contents;">
                     {% csrf_token %}
                     <input type="text" id="user-input" placeholder="Type your message..." name = "message" />
                     <button id="send-button" ><b>&uarr;</b></button>
                     <!-- <button type="submit" id="send-btn"  class="material-symbols-rounded">send</button> -->
-                    
+
                 </form> 
             </div>
-
-            <!-- <div class="input-container">
-                <input type="text" id="user-input" 
-                       placeholder="Type your message...">
-                <button id="send-button">
-                  <b>&uarr;</b>
-                  </button>
-            </div> -->
-        {% else %}
-            <p>No conversation yet</p>
+            {% endif %}
         {% endif %}
 
         </div>
@@ -139,7 +156,8 @@
 
         if (newConversationBtn) {
             newConversationBtn.addEventListener('click', function () {
-                conversationContent.textContent = "New Conversation Started!";
+                //conversationContent.textContent = "New Conversation Started!";
+                window.location.href = "{% url 'chatbot' %}"
             });
         }
 
