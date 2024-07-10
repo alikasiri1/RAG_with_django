@@ -21,7 +21,7 @@ def getRoutes(request):
     return Response(routes)
 
 @api_view(['GET']) # ['GET'] if some bode request Post method its not gona alow 
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def getPages(request):
     pages = Page.objects.all() # all chatbot pages
     # pages = Page.objects.filter(user_profile=request.user) # user chatbot pages
@@ -53,5 +53,6 @@ def questionPage(request , id): # it send Q and A for this api and save into DB
     )
 
     print('data' , data)
-    serializer =  PageSerializer(page , many = False)
+    serializer =  PageSerializer(page , many = False) 
+    # this is for response of api that returnt pageSerializer
     return Response(serializer.data) 
