@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from users.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from datetime import datetime
 
 def homepage(request):
     return render(request , 'home.html')
@@ -68,8 +69,11 @@ def chatbot(request):
         if form.is_valid():
             question = form.save(commit=False)
             # page.title = get_title_for_page_with_llm(question.message)
-            page , created = Page.objects.get_or_create(
-                title = "new Page",
+            # for t in pages:
+
+            # title =  
+            page  = Page.objects.create( #.get_or_create(
+                title = f"new Page (created at: {datetime.now().replace(microsecond=0)})",
                 user_profile = request.user ,
             )
             question.page = page
