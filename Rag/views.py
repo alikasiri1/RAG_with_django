@@ -8,6 +8,11 @@ from users.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from datetime import datetime
+import cohere
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 def homepage(request):
     return render(request , 'home.html')
@@ -55,10 +60,32 @@ def article_delete(request, id):
 
 
 
+def get_respons_from_gpt(message):
+
+    co = cohere.Client(
+        api_key=os.environ['cohere_api_key'],
+    )
+
+    stream = co.chat_stream(
+        message=message,
+        model="command-light"
+    )
+    text_list = []
+    print(stream[0]).event_type
+    # for event in stream:
+    #     if event.event_type == "text-generation":
+    #         text_list.append(event.text)
+    #         # print(event.text, end='')
+    # single_string = "".join(text_list)
+    # single_string.replace('\n', '')
+
+    return stream[0].event_type
+
 #######################################
 #  Profile.objects.get(user = request.user)
 @login_required(login_url='login')
 def chatbot(request):
+    # print(os.environ['cohere_api_key'])
     # user_profile = request.user#.user_profile
     pages  = Page.objects.filter(user_profile=request.user)
     # print(pages[0].id) # f75eb1b0-0ce2-4a36-9d6f-179fc49263a9
@@ -117,7 +144,9 @@ def page_detail(request, id):
             if form.is_valid():
                 question = form.save(commit=False)
                 question.page = page
-                question.response = 'this is chat gpt'
+                # get_respons_from_gpt(question.message)
+                question.response = get_respons_from_gpt(question.message)
+                # question.response = 'this is chat gpt'
                 question.save()
                 print('this is question',question)
                 return redirect('chatbot_page' , id = page.id)
