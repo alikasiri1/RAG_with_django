@@ -68,18 +68,18 @@ def get_respons_from_gpt(message):
 
     stream = co.chat_stream(
         message=message,
-        model="command-light"
+        model="command-nightly"
     )
     text_list = []
-    print(stream[0]).event_type
-    # for event in stream:
-    #     if event.event_type == "text-generation":
-    #         text_list.append(event.text)
+    # print(stream[0]).event_type
+    for event in stream:
+        if event.event_type == "text-generation":
+            text_list.append(event.text)
     #         # print(event.text, end='')
-    # single_string = "".join(text_list)
-    # single_string.replace('\n', '')
+    single_string = "".join(text_list) 
+    single_string.replace('\n', '')
 
-    return stream[0].event_type
+    return single_string
 
 #######################################
 #  Profile.objects.get(user = request.user)
