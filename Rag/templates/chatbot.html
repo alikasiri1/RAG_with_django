@@ -3,132 +3,149 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" 
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatGPT</title>
-    <link rel="stylesheet" href=
-"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'chatbot/style/style.css' %}">
 </head>
 
 <body class="dark-mode">
-     
     <div class="sidebar collapsed">
         <div class="tooltip">
-            <span class="tooltiptext">
-              Open Sidebar
-              </span>
+            <span class="tooltiptext">Open Sidebar</span>
             <button id="sidebar-toggle" style="color: white;">
-              <i class="fas fa-chevron-right"></i>
-              </button>
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
         <div class="sidebar-content">
             <div class="conversation-list">
                 <div class="conversation">
-                    <a href="{% url 'profile' %}"><div style="width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
-                        {{user.username}}
-                    </div>   
-                    </a>                 
-                    <!-- <p class="conversation-text" >
-                        
-                    </p> -->
-                    <!-- <p class="conversation-content">
-                      No conversation yet
-                      </p> -->
+                    <a href="{% url 'profile' %}">
+                        <div style="width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
+                            {{ user.username }}
+                        </div>
+                    </a>
                 </div>
             </div>
-            <button id="new-conversation-btn">
-              Start New Conversation
-              </button>
-                {% for page in pages %}
-                <div style="background-color: #3a3b3b;
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-                margin: 10px;">
+            <button id="new-conversation-btn">Start New Conversation</button>
+            {% for page in pages %}
+                <div style="background-color: #3a3b3b; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; margin: 10px;">
                     <a href="{% url 'chatbot_page' page.id %}">{{ page.title }}</a>
                 </div>
-                {% endfor %}
-
+            {% endfor %}
         </div>
-        
     </div>
     <div class="chat-container dark-mode">
         <div class="chat-content">
-            <!-- <div class="chat-header">
-                <div class="logo-container">
-                    <h1>
-                      <i></i>
-                    </h1>
-                </div>
-
-                <div class="mode-toggle">
-                    <label class="switch">
-                        <input type="checkbox" 
-                               id="mode-toggle-checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-
-            </div> -->
             {% if page %}
-                <div class="chat-box" id="chat-box" >
+                <div class="chat-box" id="chat-box">
                     {% for qa in questions_and_answers %}
-                        
-                            <div style="background-color:rgb(63 65 77) ; display: flex;"> <!---->
-                                <div style="width: 35px;  margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
-                                    {{user.username}}
-                                </div>
-                                <p>{{qa.message}}</p>
-                            </div> <!--  -->
-                            <div style=" display: flex; margin-left:13%; margin-top: 10px;margin-bottom: 10px;"> 
-                                <img src="{% static 'images/chatbot.jpg' %}"  style=" width: 35px; height: 35px; margin-right: 5px;">
-                                <p>{{qa.response}}</p><!--  -->
+                        <div style="background-color:rgb(63 65 77); display: flex;">
+                            <div style="width: 35px; margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
+                                {{ user.username }}
                             </div>
+                            <p>{{ qa.message }}</p>
+                        </div>
+                        <div style="display: flex; margin-left: 13%; margin-top: 10px; margin-bottom: 10px;">
+                            <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px; margin-right: 5px;">
+                            <p>{{ qa.response }}</p>
+                        </div>
                     {% endfor %}
+                    {% if circle%}
+                    <script>
+                        const chatBox = document.getElementById('chat-box');
+                        chatBox.removeChild(loadingDiv);
+                        alert('fnish')
+                    </script>
+                    {%endif%}
                 </div>
-
                 <div class="input-container">
-                    <form method="post" action="{% url 'chatbot_page' page.id %}" style="display: contents;">
+                    <form id="chat-form" method="post" action="{% url 'chatbot_page' page.id %}" style="display: contents;">
                         {% csrf_token %}
-                        <input type="text" id="user-input" placeholder="Type your message..." name = "message" />
-                        <button id="send-button" ><b>&uarr;</b></button>
-                        <!-- <button type="submit" id="send-btn"  class="material-symbols-rounded">send</button> -->
-                        
-                    </form> 
+                        <input type="text" id="user-input" placeholder="Type your message..." name="message" />
+                        <button id="send-button"><b>&uarr;</b></button>
+                    </form>
                 </div>
-
-                <!-- <div class="input-container">
-                    <input type="text" id="user-input" 
-                        placeholder="Type your message...">
-                    <button id="send-button">
-                    <b>&uarr;</b>
-                    </button>
-                </div> -->
-        {% else %}
-            <div style="margin-left: 40%;"><p >start a new conversation</p></div>
-            <div class="chat-box" id="chat-box" ></div>
-            {%if form_new_page %}
-            <div class="input-container">
-                <form method="post" action="{% url 'chatbot' %}" style="display: contents;">
-                    {% csrf_token %}
-                    <input type="text" id="user-input" placeholder="Type your message..." name = "message" />
-                    <button id="send-button" ><b>&uarr;</b></button>
-                    <!-- <button type="submit" id="send-btn"  class="material-symbols-rounded">send</button> -->
-
-                </form> 
-            </div>
+            {% else %}
+                <div style="margin-left: 40%;"><p>start a new conversation</p></div>
+                <div class="chat-box" id="chat-box"></div>
+                {% if form_new_page %}
+                    <div class="input-container">
+                        <form id="chat-form" method="post" action="{% url 'chatbot' %}" style="display: contents;">
+                            {% csrf_token %}
+                            <input type="text" id="user-input" placeholder="Type your message..." name="message" />
+                            <button id="send-button"><b>&uarr;</b></button>
+                        </form>
+                    </div>
+                {% endif %}
             {% endif %}
-        {% endif %}
-
         </div>
     </div>
-    <!-- <script src="script.js"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const chatBox = document.getElementById('chat-box');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const modeToggle = document.getElementById('mode-toggle-checkbox');
+            const sidebar = document.querySelector('.sidebar');
+            const chatContainer = document.querySelector('.chat-container');
+            const newConversationBtn = document.getElementById('new-conversation-btn');
+            const chatForm = document.getElementById('chat-form');
+        
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function () {
+                    sidebar.classList.toggle('collapsed');
+                    if (sidebar.classList.contains('collapsed')) {
+                        chatContainer.style.width = '96%';
+                        chatContainer.style.marginLeft = '3%';
+                    } else {
+                        chatContainer.style.width = 'calc(100% - 300px)';
+                        chatContainer.style.marginLeft = '300px';
+                    }
+                });
+            }
+        
+            if (newConversationBtn) {
+                newConversationBtn.addEventListener('click', function () {
+                    window.location.href = "{% url 'chatbot' %}";
+                });
+            }
+        
+            if (modeToggle) {
+                modeToggle.addEventListener('change', function () {
+                    document.body.classList.toggle('dark-mode');
+                    chatContainer.classList.toggle('dark-mode');
+                    chatContainer.classList.toggle('light-mode');
+                });
+            }
+            
 
-</body>
+
+            userInput.addEventListener('input', () => {
+                const input = userInput.value;
+                if (input.length > 0) {
+                    sendButton.classList.add('enabled');
+                    sendButton.disabled = false;
+                } else {
+                    sendButton.classList.remove('enabled');
+                    sendButton.disabled = true;
+                }
+            });
+            
+            userInput.addEventListener('input', () => {
+                const input = userInput.value;
+                if (input.length > 0) {
+                    sendButton.classList.add('enabled');
+                    sendButton.disabled = false;
+                } else {
+                    sendButton.classList.remove('enabled');
+                    sendButton.disabled = true;
+                }
+            });
+        });
+    </script>
+{%if page%}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const chatBox = document.getElementById('chat-box');
@@ -139,48 +156,191 @@
         const sidebar = document.querySelector('.sidebar');
         const chatContainer = document.querySelector('.chat-container');
         const newConversationBtn = document.getElementById('new-conversation-btn');
-        const conversationContent = document.querySelector('.conversation-content');
+        const chatForm = document.getElementById('chat-form');
+    
+    
+        chatForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+        
+            const message = userInput.value.trim();
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        
+            if (message === '') return;
+        
+            // Add user's message to the chat box
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.style = "background-color:rgb(63 65 77); display: flex;";
+            userMessageDiv.innerHTML = `
+                <div style="width: 35px; margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
+                    {{ user.username }}
+                </div>
+                <p>${message}</p>
+            `;
+            chatBox.appendChild(userMessageDiv);
+        
+            // Add loading circle
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loading';
+            loadingDiv.style = " justify-content: center; align-items: center; margin-left:13%; margin-top: 10px; margin-bottom: 10px;";
+            loadingDiv.innerHTML = `
+                <div class="thinking">
+                    <i class="fas fa-circle-notch fa-spin"></i> Thinking...
+                </div>
+            `;
+            chatBox.appendChild(loadingDiv);
+        
+            // Scroll chat box to the bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+        
+            // Clear input field
+            userInput.value = '';
+            sendButton.disabled = true;
+        
+            // Prepare and send the message via AJAX
+            const formData = new FormData(chatForm);
+            formData.set('message', message); // Ensure the message field is set with the user input
+            const actionUrl = "{% url 'chatbot_page' page.id %}";
+            //const actionUrl = window.location.href;
+            
+            fetch(chatForm.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                //body: new URLSearchParams(formData) // Convert formData to URLSearchParams if it's in object format
+                body: new URLSearchParams({
+                    'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'message': message
+                  })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove loading circle
+                chatBox.removeChild(loadingDiv);
+    
+                // Add bot's response to the chat box
+                const botResponseDiv = document.createElement('div');
+                botResponseDiv.style = "display: flex; margin-left:13%; margin-top: 10px; margin-bottom: 10px;";
+                botResponseDiv.innerHTML = `
+                    <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px; margin-right: 5px;">
+                    <p>${data.response}</p>
+                `;
+                chatBox.appendChild(botResponseDiv);
+    
+                // Scroll chat box to the bottom
+                chatBox.scrollTop = chatBox.scrollHeight;
+            })
+            
+            //window.location.href = "{% url 'chatbot_page' page.id %}";
+        });
+        
 
-        if (sidebarToggle) {
-            sidebarToggle.addEventListener('click', function () {
-                sidebar.classList.toggle('collapsed');
-                if (sidebar.classList.contains('collapsed')) {
-                    chatContainer.style.width = '96%';
-                    chatContainer.style.marginLeft = '3%';
-                } else {
-                    chatContainer.style.width = 'calc(100% - 300px)';
-                    chatContainer.style.marginLeft = '300px';
-                }
-            });
-        }
-
-        if (newConversationBtn) {
-            newConversationBtn.addEventListener('click', function () {
-                //conversationContent.textContent = "New Conversation Started!";
-                window.location.href = "{% url 'chatbot' %}"
-            });
-        }
-
-        if (modeToggle) {
-            modeToggle.addEventListener('change', function () {
-                document.body.classList.toggle('dark-mode');
-                chatContainer.classList.toggle('dark-mode');
-                chatContainer.classList.toggle('light-mode');
-            });
-        }
     });
+    </script>
+{% else %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const modeToggle = document.getElementById('mode-toggle-checkbox');
+        const sidebar = document.querySelector('.sidebar');
+        const chatContainer = document.querySelector('.chat-container');
+        const newConversationBtn = document.getElementById('new-conversation-btn');
+        const chatForm = document.getElementById('chat-form');
+    
+        chatForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+    
+            const message = userInput.value.trim();
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+            if (message === '') return;
+    
+            // Add user's message to the chat box
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.style = "background-color:rgb(63 65 77); display: flex;";
+            userMessageDiv.innerHTML = `
+                <div style="width: 35px; margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
+                    {{ user.username }}
+                </div>
+                <p>${message}</p>
+            `;
+            chatBox.appendChild(userMessageDiv);
+    
+            // Add loading circle
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loading';
+            loadingDiv.style = "justify-content: center; align-items: center; margin-left:13%; margin-top: 10px; margin-bottom: 10px;";
+            loadingDiv.innerHTML = `
+                <div class="thinking">
+                    <i class="fas fa-circle-notch fa-spin"></i> Thinking...
+                </div>
+            `;
+            chatBox.appendChild(loadingDiv);
+    
+            // Scroll chat box to the bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+    
+            // Clear input field
+            userInput.value = '';
+            sendButton.disabled = true;
+    
+            // Prepare and send the message via AJAX
+            const actionUrl = "{% url 'chatbot' %}";
+    
+            fetch(actionUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'csrfmiddlewaretoken': csrfToken,
+                    'message': message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove the loading div
+                loadingDiv.remove();
+                alert(data.redirect_url)
+                if(data.redirect_url){
+                    window.location.href = data.redirect_url
+                }
+                // Add the response to the chat box
+                const botMessageDiv = document.createElement('div');
+                botMessageDiv.style = "background-color:rgb(63 65 77); display: flex;";
+                botMessageDiv.innerHTML = `
+                    <div style="width: 35px; margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
+                        Bot
+                    </div>
+                    <p>${data.response}</p>
+                `;
+                chatBox.appendChild(botMessageDiv);
+    
+                // Scroll chat box to the bottom
+                chatBox.scrollTop = chatBox.scrollHeight;
+    
+                // Re-enable the send button
+                sendButton.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+    
+                // Remove the loading div in case of error
+                loadingDiv.remove();
+    
+                // Re-enable the send button
+                sendButton.disabled = false;
+            });
+        });
+        
 
-    document.getElementById('user-input').addEventListener('input', () => {
-        const input = document.getElementById('user-input').value;
-        const button = document.getElementById('send-button');
-      
-        if (input.length > 0) {
-          button.classList.add('enabled');
-          sendButton.disabled = false;
-        } else {
-          button.classList.remove('enabled');
-          sendButton.disabled = true;
-        }
-      });
-</script>
+    });
+    </script> 
+{% endif %}
+
+</body>
 </html>
