@@ -74,10 +74,10 @@ def chatbot(request):
             print('form is not valide') 
 
     form = QuestionForm()
-    
+     
     return render(request, 'chatbot.html', {'pages': pages , 'page':None ,'form_new_page':form , 'user': request.user })
-
-
+ 
+ 
 
 from django.urls import reverse 
 @login_required(login_url='login')

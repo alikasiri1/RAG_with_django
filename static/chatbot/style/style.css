@@ -247,7 +247,19 @@ input:checked + .slider:before {
 .slider.round {
   border-radius: 34px;
 }
+::-webkit-scrollbar {
+  width: 12px;
+}
 
+::-webkit-scrollbar-track {
+  background: #424242;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #686868;
+  border: #424242;
+  margin: 1px;
+}
 .chat-box {
   /* display: flex; */
   /* flex-direction: column;

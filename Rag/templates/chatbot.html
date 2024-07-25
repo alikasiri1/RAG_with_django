@@ -20,7 +20,7 @@
         <div class="sidebar-content">
             <div class="conversation-list">
                 <div class="conversation">
-                    <a href="{% url 'profile' %}">
+                    <a href="{% url 'profile' %}" style="text-decoration: none;">
                         <div style="width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
                             {{ user.username }}
                         </div>
@@ -30,26 +30,40 @@
             <button id="new-conversation-btn">Start New Conversation</button>
             {% for page in pages %}
                 <div style="background-color: #3a3b3b; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; margin: 10px;">
-                    <a href="{% url 'chatbot_page' page.id %}">{{ page.title }}</a>
+                    <a href="{% url 'chatbot_page' page.id %}" style="color: white; text-decoration: none;">{{ page.title }}</a>
                 </div>
             {% endfor %}
         </div>
     </div>
+    
     <div class="chat-container dark-mode">
         <div class="chat-content">
             {% if page %}
                 <div class="chat-box" id="chat-box">
+                    
                     {% for qa in questions_and_answers %}
-                        <div style="background-color:rgb(63 65 77); display: flex;">
-                            <div style="width: 35px; margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
+                        <div style="justify-content: flex-end; display: flex;"><!-- background-color:rgb(63 65 77); -->
+                            
+                            <div style="display: flex; max-width: 70%;padding: 10px; border-radius: 25px;
+                            background-color: rgb(63 65 77);
+                            padding-left: 20px;
+                            padding-right: 20px;
+                            border-top-right-radius: 0;
+                            border-bottom-right-radius: 0;
+                            ">{{ qa.message }}</div>
+                            <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
+                             margin-right: 15%;
+                            border-top-right-radius: 20px;
+                            border-bottom-right-radius: 20px;
+                            padding-right: 3px;">
                                 {{ user.username }}
                             </div>
-                            <p>{{ qa.message }}</p>
                         </div>
-                        <div style="display: flex; margin-left: 13%; margin-top: 10px; margin-bottom: 10px;">
-                            <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px; margin-right: 5px;">
-                            <p>{{ qa.response }}</p>
+                        <div style="display: flex; margin-left: 10%; margin-top: 10px; margin-bottom: 10px;">
+                            <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px;border-radius: 17px;">
+                            <div style="max-width: 70%;padding: 10px; text-align: justify;">{{ qa.response }}</div>
                         </div>
+
                     {% endfor %}
                     {% if circle%}
                     <script>
@@ -62,7 +76,7 @@
                 <div class="input-container">
                     <form id="chat-form" method="post" action="{% url 'chatbot_page' page.id %}" style="display: contents;">
                         {% csrf_token %}
-                        <input type="text" id="user-input" placeholder="Type your message..." name="message" />
+                        <input autocomplete="off" type="text" id="user-input" placeholder="Type your message..." name="message" />
                         <button id="send-button"><b>&uarr;</b></button>
                     </form>
                 </div>
@@ -73,7 +87,7 @@
                     <div class="input-container">
                         <form id="chat-form" method="post" action="{% url 'chatbot' %}" style="display: contents;">
                             {% csrf_token %}
-                            <input type="text" id="user-input" placeholder="Type your message..." name="message" />
+                            <input autocomplete="off" type="text" id="user-input" placeholder="Type your message..." name="message"  />
                             <button id="send-button"><b>&uarr;</b></button>
                         </form>
                     </div>
@@ -96,13 +110,13 @@
             if (sidebarToggle) {
                 sidebarToggle.addEventListener('click', function () {
                     sidebar.classList.toggle('collapsed');
-                    if (sidebar.classList.contains('collapsed')) {
-                        chatContainer.style.width = '96%';
-                        chatContainer.style.marginLeft = '3%';
-                    } else {
-                        chatContainer.style.width = 'calc(100% - 300px)';
-                        chatContainer.style.marginLeft = '300px';
-                    }
+                    //if (sidebar.classList.contains('collapsed')) {
+                        //chatContainer.style.width = '96%';
+                        //chatContainer.style.marginLeft = '3%';
+                    //} else {
+                        //chatContainer.style.width = 'calc(100% - 300px)';
+                        //chatContainer.style.marginLeft = '300px';
+                    //}
                 });
             }
         
@@ -169,12 +183,24 @@
         
             // Add user's message to the chat box
             const userMessageDiv = document.createElement('div');
-            userMessageDiv.style = "background-color:rgb(63 65 77); display: flex;";
             userMessageDiv.innerHTML = `
-                <div style="width: 35px; margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
-                    {{ user.username }}
-                </div>
-                <p>${message}</p>
+                <div style="justify-content: flex-end; display: flex;"><!-- background-color:rgb(63 65 77); -->
+                            
+                            <div style="display: flex; max-width: 70%;padding: 10px; border-radius: 25px;
+                            background-color: rgb(63 65 77);
+                            padding-left: 20px;
+                            padding-right: 20px;
+                            border-top-right-radius: 0;
+                            border-bottom-right-radius: 0;
+                            ">${message}</div>
+                            <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
+                             margin-right: 15%;
+                            border-top-right-radius: 20px;
+                            border-bottom-right-radius: 20px;
+                            padding-right: 3px;">
+                                {{ user.username }}
+                            </div>
+                    </div>
             `;
             chatBox.appendChild(userMessageDiv);
         
@@ -220,10 +246,11 @@
     
                 // Add bot's response to the chat box
                 const botResponseDiv = document.createElement('div');
-                botResponseDiv.style = "display: flex; margin-left:13%; margin-top: 10px; margin-bottom: 10px;";
                 botResponseDiv.innerHTML = `
-                    <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px; margin-right: 5px;">
-                    <p>${data.response}</p>
+                    <div style="display: flex; margin-left: 10%; margin-top: 10px; margin-bottom: 10px;">
+                            <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px;border-radius: 17px;">
+                            <div style="max-width: 70%;padding: 10px; text-align: justify;">${data.response}</div>
+                    </div>
                 `;
                 chatBox.appendChild(botResponseDiv);
     
@@ -260,12 +287,25 @@
     
             // Add user's message to the chat box
             const userMessageDiv = document.createElement('div');
-            userMessageDiv.style = "background-color:rgb(63 65 77); display: flex;";
+            
             userMessageDiv.innerHTML = `
-                <div style="width: 35px; margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
-                    {{ user.username }}
-                </div>
-                <p>${message}</p>
+                <div style="justify-content: flex-end; display: flex;">
+                            
+                            <div style="display: flex; max-width: 70%;padding: 10px; border-radius: 25px;
+                            background-color: rgb(63 65 77);
+                            padding-left: 20px;
+                            padding-right: 20px;
+                            border-top-right-radius: 0;
+                            border-bottom-right-radius: 0;
+                            ">${message}</div>
+                            <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
+                             margin-right: 15%;
+                            border-top-right-radius: 20px;
+                            border-bottom-right-radius: 20px;
+                            padding-right: 3px;">
+                                {{ user.username }}
+                            </div>
+                    </div>
             `;
             chatBox.appendChild(userMessageDiv);
     
@@ -305,20 +345,11 @@
             .then(data => {
                 // Remove the loading div
                 loadingDiv.remove();
-                alert(data.redirect_url)
+
                 if(data.redirect_url){
                     window.location.href = data.redirect_url
                 }
-                // Add the response to the chat box
-                const botMessageDiv = document.createElement('div');
-                botMessageDiv.style = "background-color:rgb(63 65 77); display: flex;";
-                botMessageDiv.innerHTML = `
-                    <div style="width: 35px; margin-left: 13%; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px; margin-right: 5px;">
-                        Bot
-                    </div>
-                    <p>${data.response}</p>
-                `;
-                chatBox.appendChild(botMessageDiv);
+
     
                 // Scroll chat box to the bottom
                 chatBox.scrollTop = chatBox.scrollHeight;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 {% load static %}
 <head>
@@ -69,8 +69,8 @@
             <div class="chat-box" id="chat-box">
                 {% for qa in questions_and_answers %}
                     
-                        <p><img src="{% static 'images/icon.svg' %}" alt="">{{page.id}}{{qa.message}}</p> <!--  -->
-                        <p><img src="{% static 'images/favicon.ico' %}" alt="">{{qa.response}}</p><!--  -->
+                        <p><img src="{% static 'images/icon.svg' %}" alt="">{{page.id}}{{qa.message}}</p> 
+                        <p><img src="{% static 'images/favicon.ico' %}" alt="">{{qa.response}}</p>
                     
                 {% endfor %}
             </div>
@@ -82,25 +82,17 @@
                        name = 'message'
                        >
                        <button id="send-button" ><b>&uarr;</b></button>
-                    <!-- <button type="submit" id="send-btn"  class="material-symbols-rounded">send</button> -->
                     
                 </form> 
             </div>
 
-            <!-- <div class="input-container">
-                <input type="text" id="user-input" 
-                       placeholder="Type your message...">
-                <button id="send-button">
-                  <b>&uarr;</b>
-                  </button>
-            </div> -->
+
         {% else %}
             <p>No conversation yet</p>
         {% endif %}
 
         </div>
     </div>
-    <!-- <script src="script.js"></script> -->
 
 </body>
 <script>
@@ -175,4 +167,561 @@
         }
     });
 </script>
-</html>
+</html> -->
+<!-- <div class="flex w-full flex-col gap-1 empty:hidden items-end rtl:items-start" style="-webkit-text-size-adjust: 100%;
+font-feature-settings: normal;
+-webkit-tap-highlight-color: transparent;
+font-family: ui-sans-serif,-apple-system,system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,Helvetica,Apple Color Emoji,Arial,Segoe UI Emoji,Segoe UI Symbol;
+font-variation-settings: normal;
+tab-size: 4;
+
+color: var(--text-primary);
+font-size: 1rem;
+line-height: 1.5rem;
+white-space: pre-wrap;
+word-wrap: break-word;
+border: 0 solid #e3e3e3;
+box-sizing: border-box;
+
+display: flex;
+width: 100%;
+flex-direction: column;
+align-items: flex-end;
+gap: .25rem;">
+    <div class="relative max-w-[70%] rounded-3xl bg-[#f4f4f4] px-5 py-2.5 dark:bg-token-main-surface-secondary" style="-webkit-text-size-adjust: 100%;
+    font-feature-settings: normal;
+    -webkit-tap-highlight-color: transparent;
+    font-family: ui-sans-serif,-apple-system,system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,Helvetica,Apple Color Emoji,Arial,Segoe UI Emoji,Segoe UI Symbol;
+    font-variation-settings: normal;
+    tab-size: 4;
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1.5rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border: 0 solid #e3e3e3;
+    box-sizing: border-box;
+    
+    position: relative;
+    max-width: 70%;
+    border-radius: 1.5rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-bottom: .625rem;
+    padding-top: .625rem;
+    background-color: var(--main-surface-secondary);">
+        <div style="-webkit-text-size-adjust: 100%;
+        font-feature-settings: normal;
+        -webkit-tap-highlight-color: transparent;
+        font-family: ui-sans-serif,-apple-system,system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,Helvetica,Apple Color Emoji,Arial,Segoe UI Emoji,Segoe UI Symbol;
+        font-variation-settings: normal;
+        tab-size: 4;
+        color-scheme: dark;
+        -webkit-font-smoothing: antialiased;
+        color: var(--text-primary);
+        font-size: 1rem;
+        line-height: 1.5rem;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        --tw-bg-opacity: 1;
+        border: 0 solid #e3e3e3;
+        box-sizing: border-box;">jango.urls.exceptions.NoReverseMatch: Reverse for 'chatbot_page' with keyword arguments '{'page_id': UUID('56e38346-ac7b-4735-8ab7-0fde5c44326d')}' not found. 1 pattern(s) tried: ['chatbot/(?P&lt;id&gt;[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/\\Z']</div>
+    </div>
+</div>
+
+<div class="w-full text-token-text-primary" dir="auto" data-testid="conversation-turn-20" data-scroll-anchor="false" style="-webkit-text-size-adjust: 100%;
+font-feature-settings: normal;
+-webkit-tap-highlight-color: transparent;
+font-family: ui-sans-serif,-apple-system,system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,Helvetica,Apple Color Emoji,Arial,Segoe UI Emoji,Segoe UI Symbol;
+font-variation-settings: normal;
+tab-size: 4;
+color-scheme: dark;
+-webkit-font-smoothing: antialiased;
+font-size: .875rem;
+line-height: 1.25rem;
+unicode-bidi: isolate;
+border: 0 solid #e3e3e3;
+box-sizing: border-box;
+
+width: 100%;
+color: var(--text-primary);">
+    <div class="text-base py-[18px] px-3 md:px-4 m-auto md:px-5 lg:px-1 xl:px-5">
+        <div class="mx-auto flex flex-1 gap-4 text-base md:gap-5 lg:gap-6 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]">
+            <div class="group/conversation-turn relative flex w-full min-w-0 flex-col">
+                <div class="flex-col gap-1 md:gap-3">
+                    <div class="flex flex-grow flex-col max-w-full">
+                        <div data-message-author-role="user" data-message-id="aaa29479-6148-42ad-9bdd-6391e43c7cc3" dir="auto" class="min-h-[20px] text-message flex w-full flex-col items-end gap-2 whitespace-pre-wrap break-words [.text-message+&amp;]:mt-5 overflow-x-auto">
+                            <div class="flex w-full flex-col gap-1 empty:hidden items-end rtl:items-start">
+                                <div class="relative max-w-[70%] rounded-3xl bg-[#f4f4f4] px-5 py-2.5 dark:bg-token-main-surface-secondary">
+                                    <div>jango.urls.exceptions.NoReverseMatch: Reverse for 'chatbot_page' with keyword arguments '{'page_id': UUID('56e38346-ac7b-4735-8ab7-0fde5c44326d')}' not found. 1 pattern(s) tried: ['chatbot/(?P&lt;id&gt;[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/\\Z']
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #212121;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+
+        }
+        
+        .chat-container {
+            width: 90%;
+            max-width: 835px;
+            background-color: #212121;
+            
+            
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-box {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-message {
+            margin: 10px 0;
+            display: flex;
+        }
+        
+        .chatbot {
+            justify-content: flex-start;
+        }
+        
+        .user {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 40px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        
+        .chatbot .message-content {
+            background-color: #212121;
+            color: white;
+            border-top-left-radius: 0;
+        }
+        
+        .user .message-content {
+            background-color: #2f2f2f;
+            
+            color: white;
+        }
+        
+        .input-container {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+        .icon {
+            font-size: 24px;
+            margin-right: 10px;
+            color: #007bff;
+        }   
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-top-left-radius: 10px;
+            outline: none;
+        }
+        
+        button {
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-top-right-radius: 10px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* Custom Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #424242;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background-color: #686868;
+            
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #007bff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+        
+        .sidebar button {
+            width: 80%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0056b3;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .sidebar button:hover {
+            background-color: #003f7f;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <button id="new-chat-button">New Chat</button>
+        <button id="prev-chat-button">Previous Chat</button>
+    </div>
+        <div class="chat-container">
+            <div class="chat-box">
+                <div class="chat-message chatbot">
+
+                    <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px; margin-right: 5px;">
+                    <div class="message-content">Hello! How can I assist you today?</div>
+                </div>
+                <div class="chat-message user">
+                    <div class="message-content">I need help with my order.</div>
+                </div>
+            </div>
+            <div class="input-container">
+                <input type="text" placeholder="Type your message here..." id="user-input">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    
+    <script src="script.js"></script>
+</body>
+<script>
+    document.getElementById('send-button').addEventListener('click', function() {
+        const userInput = document.getElementById('user-input').value;
+        if (userInput.trim() !== '') {
+            addMessage(userInput, 'user');
+            document.getElementById('user-input').value = '';
+            setTimeout(() => addMessage('This is a chatbot response.', 'chatbot'), 1000);
+        }
+    });
+    
+    function addMessage(text, sender) {
+        const chatBox = document.querySelector('.chat-box');
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', sender);
+        
+        const messageContentDiv = document.createElement('div');
+        messageContentDiv.classList.add('message-content');
+        messageContentDiv.textContent = text;
+        
+        messageDiv.appendChild(messageContentDiv);
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    
+</script>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <body>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: #f5f5f5;
+                display: flex;
+            }
+            
+            body {
+                display: flex;
+                overflow: hidden;
+            }
+            
+            .sidebar {
+                width: 200px;
+                background-color: #007bff;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 20px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                transition: transform 0.3s ease;
+                transform: translateX(0);
+            }
+            
+            .sidebar.closed {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar button {
+                width: 80%;
+                margin: 10px 0;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: #0056b3;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            
+            .sidebar button:hover {
+                background-color: #003f7f;
+            }
+            
+            .chat-container {
+                flex: 1;
+                height: 100%;
+                background-color: white;
+                border-left: 1px solid #ccc;
+                display: flex;
+                flex-direction: column;
+                margin-left: 200px;
+                transition: margin-left 0.3s ease;
+            }
+            
+            .chat-container.expanded {
+                margin-left: 0;
+            }
+            
+            .chat-box {
+                flex: 1;
+                padding: 10px;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .chat-message {
+                margin: 10px 0;
+                display: flex;
+                align-items: center;
+            }
+            
+            .chatbot {
+                justify-content: flex-start;
+            }
+            
+            .user {
+                justify-content: flex-end;
+            }
+            
+            .message-content {
+                max-width: 70%;
+                padding: 10px;
+                border-radius: 10px;
+            }
+            
+            .chatbot .message-content {
+                background-color: #e1ffc7;
+                border-top-left-radius: 0;
+            }
+            
+            .user .message-content {
+                background-color: #d1e7ff;
+                border-top-right-radius: 0;
+            }
+            
+            .icon {
+                font-size: 24px;
+                margin-right: 10px;
+                color: #007bff;
+            }
+            
+            .input-container {
+                display: flex;
+                border-top: 1px solid #ccc;
+            }
+            
+            input[type="text"] {
+                flex: 1;
+                padding: 10px;
+                border: none;
+                border-top-left-radius: 10px;
+                outline: none;
+            }
+            
+            button {
+                padding: 10px;
+                border: none;
+                background-color: #007bff;
+                color: white;
+                border-top-right-radius: 10px;
+                cursor: pointer;
+            }
+            
+            button:hover {
+                background-color: #0056b3;
+            }
+            
+            .toggle-button {
+                position: absolute;
+                top: 10px;
+                left: 210px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: left 0.3s ease;
+            }
+            
+            .toggle-button.closed {
+                left: 10px;
+            }
+            
+            /* Custom Scrollbar Styles */
+            ::-webkit-scrollbar {
+                width: 12px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: #f5f5f5;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background-color: #007bff;
+                border-radius: 20px;
+                border: 3px solid #f5f5f5;
+            }
+            
+        </style>
+    </body>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <button id="new-chat-button">New Chat</button>
+        <button id="prev-chat-button">Previous Chat</button>
+    </div>
+    <button id="toggle-sidebar" class="toggle-button">&#9664;</button>
+    <div class="chat-container" id="chat-container">
+        <div class="chat-box" id="chat-box">
+            <div class="chat-message chatbot">
+                <div class="icon"><i class="fas fa-robot"></i></div>
+                <div class="message-content">Hello! How can I assist you today?</div>
+            </div>
+            <div class="chat-message user">
+                <div class="message-content">I need help with my order.</div>
+            </div>
+
+        </div>
+        <div class="input-container">
+            <input type="text" placeholder="Type your message here..." id="user-input">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+<script>
+    document.getElementById('send-button').addEventListener('click', function() {
+        const userInput = document.getElementById('user-input').value;
+        if (userInput.trim() !== '') {
+            addMessage(userInput, 'user');
+            document.getElementById('user-input').value = '';
+            // Simulate chatbot response
+            setTimeout(() => addMessage('This is a chatbot response.', 'chatbot'), 1000);
+        }
+    });
+    
+    document.getElementById('new-chat-button').addEventListener('click', function() {
+        document.getElementById('chat-box').innerHTML = `
+            <div class="chat-message chatbot">
+                <div class="icon"><i class="fas fa-robot"></i></div>
+                <div class="message-content">Hello! How can I assist you today?</div>
+            </div>
+        `;
+    });
+    
+    document.getElementById('prev-chat-button').addEventListener('click', function() {
+        alert('This feature is not yet implemented.');
+    });
+    
+    document.getElementById('toggle-sidebar').addEventListener('click', function() {
+        const sidebar = document.getElementById('sidebar');
+        const chatContainer = document.getElementById('chat-container');
+        const toggleButton = document.getElementById('toggle-sidebar');
+    
+        sidebar.classList.toggle('closed');
+        chatContainer.classList.toggle('expanded');
+        toggleButton.classList.toggle('closed');
+    
+        if (sidebar.classList.contains('closed')) {
+            toggleButton.innerHTML = '&#9654;';
+        } else {
+            toggleButton.innerHTML = '&#9664;';
+        }
+    });
+    
+    function addMessage(text, sender) {
+        const chatBox = document.querySelector('.chat-box');
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', sender);
+        
+        const messageContentDiv = document.createElement('div');
+        messageContentDiv.classList.add('message-content');
+        messageContentDiv.textContent = text;
+        
+        if (sender === 'chatbot') {
+            const iconDiv = document.createElement('div');
+            iconDiv.classList.add('icon');
+            iconDiv.innerHTML = '<i class="fas fa-robot"></i>';
+            messageDiv.appendChild(iconDiv);
+        }
+        
+        messageDiv.appendChild(messageContentDiv);
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    
+</script>
+</html> 
+
