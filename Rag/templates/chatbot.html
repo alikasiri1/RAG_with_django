@@ -7,6 +7,7 @@
     <title>ChatGPT</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'chatbot/style/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
 </head>
 
 <body class="dark-mode">
@@ -44,24 +45,25 @@
                     {% for qa in questions_and_answers %}
                         <div style="justify-content: flex-end; display: flex;"><!-- background-color:rgb(63 65 77); -->
                             
-                            <div style="display: flex; max-width: 70%;padding: 10px; border-radius: 25px;
+                            <div style="display: flex; max-width: 40%;padding: 10px; border-radius: 25px;
                             background-color: rgb(63 65 77);
                             padding-left: 20px;
                             padding-right: 20px;
-                            border-top-right-radius: 0;
-                            border-bottom-right-radius: 0;
+                            font-family: system-ui;
+                            text-align: justify;
                             ">{{ qa.message }}</div>
                             <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
                              margin-right: 15%;
-                            border-top-right-radius: 20px;
-                            border-bottom-right-radius: 20px;
-                            padding-right: 3px;">
+                            padding-right: 3px;
+                            border-radius: 20px;
+                            margin-left: 5px;">
                                 {{ user.username }}
                             </div>
                         </div>
                         <div style="display: flex; margin-left: 10%; margin-top: 10px; margin-bottom: 10px;">
                             <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px;border-radius: 17px;">
-                            <div style="max-width: 70%;padding: 10px; text-align: justify;">{{ qa.response }}</div>
+                            <div style="max-width: 70%;padding: 10px; text-align: justify;line-height: 1.75;
+                            font-family: system-ui;">{{ qa.response }}</div>
                         </div>
 
                     {% endfor %}
@@ -186,18 +188,18 @@
             userMessageDiv.innerHTML = `
                 <div style="justify-content: flex-end; display: flex;"><!-- background-color:rgb(63 65 77); -->
                             
-                            <div style="display: flex; max-width: 70%;padding: 10px; border-radius: 25px;
+                            <div style="display: flex; max-width: 40%;padding: 10px; border-radius: 25px;
                             background-color: rgb(63 65 77);
                             padding-left: 20px;
                             padding-right: 20px;
-                            border-top-right-radius: 0;
-                            border-bottom-right-radius: 0;
+                            font-family: system-ui;
+                            text-align: justify;
                             ">${message}</div>
                             <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
-                             margin-right: 15%;
-                            border-top-right-radius: 20px;
-                            border-bottom-right-radius: 20px;
-                            padding-right: 3px;">
+                            margin-right: 15%;
+                            padding-right: 3px;
+                            border-radius: 20px;
+                            margin-left: 5px;">
                                 {{ user.username }}
                             </div>
                     </div>
@@ -248,8 +250,11 @@
                 const botResponseDiv = document.createElement('div');
                 botResponseDiv.innerHTML = `
                     <div style="display: flex; margin-left: 10%; margin-top: 10px; margin-bottom: 10px;">
-                            <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px;border-radius: 17px;">
-                            <div style="max-width: 70%;padding: 10px; text-align: justify;">${data.response}</div>
+                        <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px;border-radius: 17px;">
+                        <div style="max-width: 70%;padding: 10px; text-align: justify;line-height: 1.75;
+                            font-family: system-ui;">
+                            ${data.response}
+                        </div>
                     </div>
                 `;
                 chatBox.appendChild(botResponseDiv);
@@ -291,18 +296,18 @@
             userMessageDiv.innerHTML = `
                 <div style="justify-content: flex-end; display: flex;">
                             
-                            <div style="display: flex; max-width: 70%;padding: 10px; border-radius: 25px;
+                            <div style="display: flex; max-width: 40%;padding: 10px; border-radius: 25px;
                             background-color: rgb(63 65 77);
                             padding-left: 20px;
                             padding-right: 20px;
-                            border-top-right-radius: 0;
-                            border-bottom-right-radius: 0;
+                            font-family: system-ui;
+                            text-align: justify;
                             ">${message}</div>
                             <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
-                             margin-right: 15%;
-                            border-top-right-radius: 20px;
-                            border-bottom-right-radius: 20px;
-                            padding-right: 3px;">
+                            margin-right: 15%;
+                            padding-right: 3px;
+                            border-radius: 20px;
+                            margin-left: 5px;">
                                 {{ user.username }}
                             </div>
                     </div>

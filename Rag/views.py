@@ -117,7 +117,7 @@ def page_detail(request, id):
             
             form = QuestionForm()
             context['form'] = form 
-        print(Question_and_Answer.objects.filter(page=page).last().response)
+        # print(Question_and_Answer.objects.filter(page=page).last().response)
         return render(request, 'chatbot.html', context) 
     else:
         print('this is else')
