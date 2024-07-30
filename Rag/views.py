@@ -15,7 +15,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 load_dotenv(find_dotenv())
-
+ 
 def homepage(request):
     return render(request , 'home.html')
 

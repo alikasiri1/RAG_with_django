@@ -8,16 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'chatbot/style/style.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+
 </head>
 
 <body class="dark-mode">
     <div class="sidebar collapsed">
-        <div class="tooltip">
-            <span class="tooltiptext">Open Sidebar</span>
-            <button id="sidebar-toggle" style="color: white;">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
         <div class="sidebar-content">
             <div class="conversation-list">
                 <div class="conversation">
@@ -36,44 +31,43 @@
             {% endfor %}
         </div>
     </div>
+
+    <div class="sidebar-toggle-container">
+        <button id="sidebar-toggle" style="color: white;">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
     
-    <div class="chat-container dark-mode">
+    <div class="chat-container dark-mode" style="background-color: #212121;">
         <div class="chat-content">
             {% if page %}
                 <div class="chat-box" id="chat-box">
                     
                     {% for qa in questions_and_answers %}
                         <div style="justify-content: flex-end; display: flex;"><!-- background-color:rgb(63 65 77); -->
-                            
-                            <div style="display: flex; max-width: 40%;padding: 10px; border-radius: 25px;
-                            background-color: rgb(63 65 77);
+                            <!--background-color: #2f2f2f; background-color: #212121; -->
+                            <div style="display: flex; max-width: 45%;padding: 10px; border-radius: 25px;
+                            background-color:  #2f2f2f;
                             padding-left: 20px;
                             padding-right: 20px;
                             font-family: system-ui;
                             text-align: justify;
                             ">{{ qa.message }}</div>
-                            <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
+                            <!-- <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
                              margin-right: 15%;
                             padding-right: 3px;
                             border-radius: 20px;
                             margin-left: 5px;">
                                 {{ user.username }}
-                            </div>
+                            </div> -->
                         </div>
-                        <div style="display: flex; margin-left: 10%; margin-top: 10px; margin-bottom: 10px;">
+                        <div style="  margin-top: 10px; margin-bottom: 10px;"> <!--display: flex;-->
                             <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px;border-radius: 17px;">
-                            <div style="max-width: 70%;padding: 10px; text-align: justify;line-height: 1.75;
+                            <div style="max-width: 85%;padding: 10px; text-align: justify;line-height: 1.75;
                             font-family: system-ui;">{{ qa.response }}</div>
                         </div>
 
                     {% endfor %}
-                    {% if circle%}
-                    <script>
-                        const chatBox = document.getElementById('chat-box');
-                        chatBox.removeChild(loadingDiv);
-                        alert('fnish')
-                    </script>
-                    {%endif%}
                 </div>
                 <div class="input-container">
                     <form id="chat-form" method="post" action="{% url 'chatbot_page' page.id %}" style="display: contents;">
@@ -103,40 +97,32 @@
             const userInput = document.getElementById('user-input');
             const sendButton = document.getElementById('send-button');
             const sidebarToggle = document.getElementById('sidebar-toggle');
-            const modeToggle = document.getElementById('mode-toggle-checkbox');
             const sidebar = document.querySelector('.sidebar');
-            const chatContainer = document.querySelector('.chat-container');
             const newConversationBtn = document.getElementById('new-conversation-btn');
             const chatForm = document.getElementById('chat-form');
-        
+            const chatContainer = document.querySelector('.chat-container');
+            const buttondiv = document.getElementsByClassName('sidebar-toggle-container')
+
+
             if (sidebarToggle) {
                 sidebarToggle.addEventListener('click', function () {
                     sidebar.classList.toggle('collapsed');
-                    //if (sidebar.classList.contains('collapsed')) {
-                        //chatContainer.style.width = '96%';
-                        //chatContainer.style.marginLeft = '3%';
-                    //} else {
-                        //chatContainer.style.width = 'calc(100% - 300px)';
-                        //chatContainer.style.marginLeft = '300px';
-                    //}
+                    sidebarToggle.classList.toggle('collapsed');
+                    chatContainer.classList.toggle('expanded');
+
+                    if (sidebarToggle.classList.contains('collapsed')) {
+                        sidebarToggle.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                    } else {
+                        sidebarToggle.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                      }
                 });
             }
-        
+
             if (newConversationBtn) {
                 newConversationBtn.addEventListener('click', function () {
                     window.location.href = "{% url 'chatbot' %}";
                 });
             }
-        
-            if (modeToggle) {
-                modeToggle.addEventListener('change', function () {
-                    document.body.classList.toggle('dark-mode');
-                    chatContainer.classList.toggle('dark-mode');
-                    chatContainer.classList.toggle('light-mode');
-                });
-            }
-            
-
 
             userInput.addEventListener('input', () => {
                 const input = userInput.value;
@@ -148,7 +134,7 @@
                     sendButton.disabled = true;
                 }
             });
-            
+
             userInput.addEventListener('input', () => {
                 const input = userInput.value;
                 if (input.length > 0) {
@@ -167,129 +153,105 @@
         const chatBox = document.getElementById('chat-box');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const modeToggle = document.getElementById('mode-toggle-checkbox');
-        const sidebar = document.querySelector('.sidebar');
-        const chatContainer = document.querySelector('.chat-container');
-        const newConversationBtn = document.getElementById('new-conversation-btn');
         const chatForm = document.getElementById('chat-form');
-    
-    
+
         chatForm.addEventListener('submit', function (event) {
             event.preventDefault();
-        
+
             const message = userInput.value.trim();
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        
+
             if (message === '') return;
-        
+
             // Add user's message to the chat box
             const userMessageDiv = document.createElement('div');
             userMessageDiv.innerHTML = `
                 <div style="justify-content: flex-end; display: flex;"><!-- background-color:rgb(63 65 77); -->
                             
                             <div style="display: flex; max-width: 40%;padding: 10px; border-radius: 25px;
-                            background-color: rgb(63 65 77);
+                            background-color:  #2f2f2f;
                             padding-left: 20px;
                             padding-right: 20px;
                             font-family: system-ui;
                             text-align: justify;
                             ">${message}</div>
-                            <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
-                            margin-right: 15%;
-                            padding-right: 3px;
-                            border-radius: 20px;
-                            margin-left: 5px;">
-                                {{ user.username }}
-                            </div>
                     </div>
             `;
             chatBox.appendChild(userMessageDiv);
-        
+
             // Add loading circle
             const loadingDiv = document.createElement('div');
             loadingDiv.id = 'loading';
-            loadingDiv.style = " justify-content: center; align-items: center; margin-left:13%; margin-top: 10px; margin-bottom: 10px;";
+            loadingDiv.style = " justify-content: center; align-items: center; margin-top: 10px; margin-bottom: 10px;";
             loadingDiv.innerHTML = `
                 <div class="thinking">
                     <i class="fas fa-circle-notch fa-spin"></i> Thinking...
                 </div>
             `;
             chatBox.appendChild(loadingDiv);
-        
+
             // Scroll chat box to the bottom
             chatBox.scrollTop = chatBox.scrollHeight;
-        
+
             // Clear input field
             userInput.value = '';
             sendButton.disabled = true;
-        
+
             // Prepare and send the message via AJAX
             const formData = new FormData(chatForm);
             formData.set('message', message); // Ensure the message field is set with the user input
             const actionUrl = "{% url 'chatbot_page' page.id %}";
-            //const actionUrl = window.location.href;
             
             fetch(chatForm.action, {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': csrfToken
                 },
-                //body: new URLSearchParams(formData) // Convert formData to URLSearchParams if it's in object format
                 body: new URLSearchParams({
                     'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
                     'message': message
-                  })
+                })
             })
             .then(response => response.json())
             .then(data => {
                 // Remove loading circle
                 chatBox.removeChild(loadingDiv);
-    
+
                 // Add bot's response to the chat box
                 const botResponseDiv = document.createElement('div');
                 botResponseDiv.innerHTML = `
-                    <div style="display: flex; margin-left: 10%; margin-top: 10px; margin-bottom: 10px;">
-                        <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px;border-radius: 17px;">
-                        <div style="max-width: 70%;padding: 10px; text-align: justify;line-height: 1.75;
-                            font-family: system-ui;">
+                <div style="  margin-top: 10px; margin-bottom: 10px;"> <!--display: flex;-->
+                    <img src="{% static 'images/chatbot.jpg' %}" style="width: 35px; height: 35px;border-radius: 17px;">
+                    <div style="max-width: 85%;padding: 10px; text-align: justify;line-height: 1.75;
+                    font-family: system-ui;">
                             ${data.response}
                         </div>
                     </div>
                 `;
                 chatBox.appendChild(botResponseDiv);
-    
+
                 // Scroll chat box to the bottom
                 chatBox.scrollTop = chatBox.scrollHeight;
-            })
-            
-            //window.location.href = "{% url 'chatbot_page' page.id %}";
+            });
         });
-        
-
     });
-    </script>
+</script>
 {% else %}
-  <script>
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         const chatBox = document.getElementById('chat-box');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const modeToggle = document.getElementById('mode-toggle-checkbox');
-        const sidebar = document.querySelector('.sidebar');
-        const chatContainer = document.querySelector('.chat-container');
-        const newConversationBtn = document.getElementById('new-conversation-btn');
         const chatForm = document.getElementById('chat-form');
-    
+
         chatForm.addEventListener('submit', function (event) {
             event.preventDefault();
-    
+
             const message = userInput.value.trim();
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    
+
             if (message === '') return;
-    
+
             // Add user's message to the chat box
             const userMessageDiv = document.createElement('div');
             
@@ -297,44 +259,38 @@
                 <div style="justify-content: flex-end; display: flex;">
                             
                             <div style="display: flex; max-width: 40%;padding: 10px; border-radius: 25px;
-                            background-color: rgb(63 65 77);
+                            background-color:  #2f2f2f;
                             padding-left: 20px;
                             padding-right: 20px;
                             font-family: system-ui;
                             text-align: justify;
                             ">${message}</div>
-                            <div style=" width: 35px; height: 28px; background-color: rgb(26, 188, 156); color: white; border-radius: 1px; text-align: center; padding-top: 10px;
-                            margin-right: 15%;
-                            padding-right: 3px;
-                            border-radius: 20px;
-                            margin-left: 5px;">
-                                {{ user.username }}
-                            </div>
+                        
                     </div>
             `;
             chatBox.appendChild(userMessageDiv);
-    
+
             // Add loading circle
             const loadingDiv = document.createElement('div');
             loadingDiv.id = 'loading';
-            loadingDiv.style = "justify-content: center; align-items: center; margin-left:13%; margin-top: 10px; margin-bottom: 10px;";
+            loadingDiv.style = "justify-content: center; align-items: center; margin-top: 10px; margin-bottom: 10px;";
             loadingDiv.innerHTML = `
                 <div class="thinking">
                     <i class="fas fa-circle-notch fa-spin"></i> Thinking...
                 </div>
             `;
             chatBox.appendChild(loadingDiv);
-    
+
             // Scroll chat box to the bottom
             chatBox.scrollTop = chatBox.scrollHeight;
-    
+
             // Clear input field
             userInput.value = '';
             sendButton.disabled = true;
-    
+
             // Prepare and send the message via AJAX
             const actionUrl = "{% url 'chatbot' %}";
-    
+
             fetch(actionUrl, {
                 method: 'POST',
                 headers: {
@@ -355,27 +311,24 @@
                     window.location.href = data.redirect_url
                 }
 
-    
                 // Scroll chat box to the bottom
                 chatBox.scrollTop = chatBox.scrollHeight;
-    
+
                 // Re-enable the send button
                 sendButton.disabled = false;
             })
             .catch(error => {
                 console.error('Error:', error);
-    
+
                 // Remove the loading div in case of error
                 loadingDiv.remove();
-    
+
                 // Re-enable the send button
                 sendButton.disabled = false;
             });
         });
-        
-
     });
-    </script> 
+</script>
 {% endif %}
 
 </body>
